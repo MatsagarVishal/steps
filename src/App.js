@@ -2,22 +2,45 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [step, setStep] = useState(1);
+  const [isOpen, setIsOpen] = useState(true);
+  function handdleIsOpen() {
+    setIsOpen(!isOpen);
+  }
+  function handdlePrev() {
+    if (step > 1) {
+      setStep((s) => s - 1);
+    }
+  }
+  function handdleNext() {
+    if (step <= 2) {
+      setStep((s) => s + 1);
+    }
+  }
   return (
     <div className="App">
-      <Card />
+      <span>
+        {isOpen ? (
+          <button className="button" onClick={handdleIsOpen}>
+            Close
+          </button>
+        ) : (
+          <button className="button" onClick={handdleIsOpen}>
+            Open
+          </button>
+        )}
+      </span>
+      {isOpen ? (
+        <Card step={step} handdlePrev={handdlePrev} handdleNext={handdleNext} />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
 
 export default App;
-function Card() {
-  const [step, setStep] = useState(1);
-  function handdlePrev() {
-    setStep(step - 1);
-  }
-  function handdleNext() {
-    setStep(step + 1);
-  }
+function Card({ step, handdlePrev, handdleNext }) {
   return (
     <div className="card">
       <Eelements
@@ -28,13 +51,14 @@ function Card() {
     </div>
   );
 }
+
 function Eelements(props) {
   return (
     <>
       <div className="steps">
-        <span className={props.step === 1 ? "active" : ""}>1</span>
-        <span className={props.step === 2 ? "active" : ""}>2</span>
-        <span className={props.step === 3 ? "active" : ""}>3</span>
+        <div className={props.step >= 1 ? "active" : ""}>1</div>
+        <div className={props.step >= 2 ? "active" : ""}>2</div>
+        <div className={props.step >= 3 ? "active" : ""}>3</div>
       </div>
       <div className="main">
         <h1>step : {props.step}</h1>
