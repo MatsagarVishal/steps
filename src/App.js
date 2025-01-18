@@ -9,12 +9,12 @@ function App() {
   }
   function handdlePrev() {
     if (step > 1) {
-      setStep(step - 1);
+      setStep((s) => s - 1);
     }
   }
   function handdleNext() {
     if (step <= 2) {
-      setStep(step + 1);
+      setStep((s) => s + 1);
     }
   }
   return (
@@ -41,7 +41,6 @@ function App() {
 
 export default App;
 function Card({ step, handdlePrev, handdleNext }) {
-
   return (
     <div className="card">
       <Eelements
